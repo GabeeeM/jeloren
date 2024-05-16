@@ -380,43 +380,40 @@ impl Block {
     #[inline]
     pub fn get_glow(&self) -> Option<u8> {
         let glow_level = match self.kind() {
-            BlockKind::Lava => 24,
-            BlockKind::GlowingRock | BlockKind::GlowingWeakRock => 10,
-            BlockKind::GlowingMushroom => 20,
+            BlockKind::Lava => 2,
+            // BlockKind::GlowingRock | BlockKind::GlowingWeakRock => 10,
+            // BlockKind::GlowingMushroom => 20,
             _ => match self.get_sprite()? {
                 SpriteKind::StreetLamp | SpriteKind::StreetLampTall => 24,
                 SpriteKind::Ember | SpriteKind::FireBlock => 20,
                 SpriteKind::WallLamp
                 | SpriteKind::WallLampSmall
-                | SpriteKind::WallLampWizard
-                | SpriteKind::WallLampMesa
                 | SpriteKind::WallSconce
                 | SpriteKind::FireBowlGround
-                | SpriteKind::MesaLantern
                 | SpriteKind::ChristmasOrnament
                 | SpriteKind::CliffDecorBlock
                 | SpriteKind::Orb
                 | SpriteKind::Candle => 16,
                 SpriteKind::DiamondLight => 30,
-                SpriteKind::Velorite
-                | SpriteKind::VeloriteFrag
-                | SpriteKind::GrassBlueShort
-                | SpriteKind::GrassBlueMedium
-                | SpriteKind::GrassBlueLong
-                | SpriteKind::CavernLillypadBlue
-                | SpriteKind::MycelBlue
-                | SpriteKind::Mold
-                | SpriteKind::CeilingMushroom => 6,
-                SpriteKind::CaveMushroom
-                | SpriteKind::GlowMushroom
-                | SpriteKind::CookingPot
-                | SpriteKind::CrystalHigh
-                | SpriteKind::LanternFlower
-                | SpriteKind::CeilingLanternFlower
-                | SpriteKind::LanternPlant
-                | SpriteKind::CeilingLanternPlant
-                | SpriteKind::CrystalLow => 10,
-                SpriteKind::SewerMushroom => 16,
+                SpriteKind::Velorite => 3,
+                // | SpriteKind::VeloriteFrag
+                // | SpriteKind::GrassBlueShort
+                // | SpriteKind::GrassBlueMedium
+                // | SpriteKind::GrassBlueLong
+                // | SpriteKind::CavernLillypadBlue
+                // | SpriteKind::MycelBlue
+                // | SpriteKind::Mold
+                // | SpriteKind::CeilingMushroom => 6,
+                // SpriteKind::CaveMushroom
+                // | SpriteKind::GlowMushroom
+                // | SpriteKind::CookingPot
+                // | SpriteKind::CrystalHigh
+                // | SpriteKind::LanternFlower
+                // | SpriteKind::CeilingLanternFlower
+                // | SpriteKind::LanternPlant
+                // | SpriteKind::CeilingLanternPlant
+                // | SpriteKind::CrystalLow => 10,
+                // SpriteKind::SewerMushroom => 16,
                 SpriteKind::Amethyst
                 | SpriteKind::Ruby
                 | SpriteKind::Sapphire
@@ -429,11 +426,14 @@ impl Block {
                 | SpriteKind::RubySmall
                 | SpriteKind::EmeraldSmall
                 | SpriteKind::SapphireSmall => 3,
-                SpriteKind::Lantern => 24,
+                // SpriteKind::Lantern => 24,
                 SpriteKind::TerracottaStatue => 8,
-                SpriteKind::SeashellLantern | SpriteKind::GlowIceCrystal => 16,
+                SpriteKind::SeashellLantern => 16,
                 SpriteKind::SeaDecorEmblem => 12,
                 SpriteKind::SeaDecorBlock | SpriteKind::HaniwaKeyDoor => 10,
+                SpriteKind::Frostwood => 60,
+                SpriteKind::Silver | SpriteKind::Gold => 50,
+                SpriteKind::Iron | SpriteKind::Coal | SpriteKind::Bloodstone => 6,
                 _ => return None,
             },
         };

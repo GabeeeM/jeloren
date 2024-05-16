@@ -110,6 +110,7 @@ use common::{
     outcome::Outcome,
     resources::{ProgramTime, Secs, Time},
     slowjob::SlowJobPool,
+    states::glide::{BOOST, CAP, TOO_FAST},
     terrain::{SpriteKind, TerrainChunk, UnlockKind},
     trade::{ReducedInventory, TradeAction},
     uid::Uid,
@@ -2666,6 +2667,14 @@ impl Hud {
             }
         }
 
+        if debug_info.is_some() {
+            let mut boost = BOOST.lock().unwrap();
+            *boost = true;
+        } else {
+            let mut boost = BOOST.lock().unwrap();
+            *boost = false;
+        }
+
         // Display debug window.
         // TODO:
         // Make it use i18n keys.
@@ -2725,6 +2734,26 @@ impl Hud {
                         velocity.z,
                         velocity.magnitude()
                     );
+
+                    let cap = CAP.lock().unwrap();
+
+                    if !*cap {
+                        if velocity.magnitude() > 22.3 {
+                            let mut too_fast = TOO_FAST.lock().unwrap();
+                            *too_fast = true;
+                        } else {
+                            let mut too_fast = TOO_FAST.lock().unwrap();
+                            *too_fast = false;
+                        }
+                    } else {
+                        if velocity.magnitude() > 63.6 {
+                            let mut too_fast = TOO_FAST.lock().unwrap();
+                            *too_fast = true;
+                        } else {
+                            let mut too_fast = TOO_FAST.lock().unwrap();
+                            *too_fast = false;
+                        }
+                    }
                     let horizontal_velocity = velocity.xy().magnitude();
                     let dz = velocity.z;
                     // don't divide by zero

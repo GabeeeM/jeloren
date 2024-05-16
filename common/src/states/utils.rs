@@ -604,6 +604,39 @@ pub fn handle_orientation(
     efficiency: f32,
     dir_override: Option<Dir>,
 ) {
+    if input_is_pressed(data, crate::comp::InputKind::Block) {
+        if input_is_pressed(data, InputKind::Primary) {
+            let mut fart = Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0,
+            };
+            fart += update.character_activity.look_dir.unwrap();
+            update.pos.0.x += fart.x * data.dt.0 * 5.0;
+            update.pos.0.y += fart.y * data.dt.0 * 5.0;
+            update.pos.0.z += fart.z * data.dt.0 * 5.0;
+        } else if input_is_pressed(data, InputKind::Secondary) {
+            let mut fart = Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0,
+            };
+            fart += update.character_activity.look_dir.unwrap();
+            update.pos.0.x += fart.x * data.dt.0 * 15.0;
+            update.pos.0.y += fart.y * data.dt.0 * 15.0;
+            update.pos.0.z += fart.z * data.dt.0 * 15.0;
+        } else {
+            let mut fart = Vec3 {
+                x: 0.0,
+                y: 0.0,
+                z: 0.0,
+            };
+            fart += update.character_activity.look_dir.unwrap();
+            update.pos.0.x += fart.x * data.dt.0 * 100.0;
+            update.pos.0.y += fart.y * data.dt.0 * 100.0;
+            update.pos.0.z += fart.z * data.dt.0 * 100.0;
+        }
+    }
     /// first check for horizontal
     fn to_horizontal_fast(ori: &crate::comp::Ori) -> crate::comp::Ori {
         if ori.to_quat().into_vec4().xy().is_approx_zero() {

@@ -6900,6 +6900,7 @@ dependencies = [
  "lazy_static",
  "num-derive",
  "num-traits",
+ "once_cell",
  "ordered-float 3.9.2",
  "petgraph 0.6.4",
  "rand 0.8.5",
