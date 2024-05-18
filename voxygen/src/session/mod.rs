@@ -780,6 +780,15 @@ impl PlayState for SessionState {
                                     self.target_entity,
                                 );
                             },
+                            GameInput::Noclip => {
+                                self.walking_speed = false;
+                                self.client.borrow_mut().handle_input(
+                                    InputKind::Noclip,
+                                    state,
+                                    None,
+                                    self.target_entity,
+                                );
+                            },
                             GameInput::Roll => {
                                 self.walking_speed = false;
                                 let mut client = self.client.borrow_mut();
@@ -1229,7 +1238,7 @@ impl PlayState for SessionState {
                                 let camera = self.scene.camera_mut();
                                 let client = self.client.borrow();
                                 camera.next_mode(
-                                    client.is_moderator(),
+                                    true,
                                     client.presence().map_or(true, |presence| {
                                         presence != PresenceKind::Spectator
                                     }) || self.viewpoint_entity.is_some(),

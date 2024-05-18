@@ -434,6 +434,12 @@ impl Block {
                 SpriteKind::Frostwood => 60,
                 SpriteKind::Silver | SpriteKind::Gold => 50,
                 SpriteKind::Iron | SpriteKind::Coal | SpriteKind::Bloodstone => 6,
+                SpriteKind::DungeonChest0
+                | SpriteKind::DungeonChest1
+                | SpriteKind::DungeonChest2
+                | SpriteKind::DungeonChest3
+                | SpriteKind::DungeonChest4
+                | SpriteKind::DungeonChest5 => 60,
                 _ => return None,
             },
         };

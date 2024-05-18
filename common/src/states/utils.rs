@@ -604,7 +604,7 @@ pub fn handle_orientation(
     efficiency: f32,
     dir_override: Option<Dir>,
 ) {
-    if input_is_pressed(data, crate::comp::InputKind::Block) {
+    if input_is_pressed(data, InputKind::Noclip) {
         if input_is_pressed(data, InputKind::Primary) {
             let mut fart = Vec3 {
                 x: 0.0,
@@ -1419,7 +1419,7 @@ pub fn handle_input(
         InputKind::Jump => {
             handle_jump(data, output_events, update, 1.0);
         },
-        InputKind::Fly => {},
+        InputKind::Fly | InputKind::Noclip => {},
     }
 }
 
