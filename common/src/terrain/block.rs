@@ -392,8 +392,8 @@ impl Block {
                 | SpriteKind::FireBowlGround
                 | SpriteKind::ChristmasOrnament
                 | SpriteKind::CliffDecorBlock
-                | SpriteKind::Orb
-                | SpriteKind::Candle => 16,
+                | SpriteKind::Orb => 16,
+                // | SpriteKind::Candle => 16,
                 SpriteKind::DiamondLight => 30,
                 SpriteKind::Velorite => 3,
                 // | SpriteKind::VeloriteFrag
@@ -439,7 +439,7 @@ impl Block {
                 | SpriteKind::DungeonChest2
                 | SpriteKind::DungeonChest3
                 | SpriteKind::DungeonChest4
-                | SpriteKind::DungeonChest5 => 60,
+                | SpriteKind::DungeonChest5 => 100,
                 _ => return None,
             },
         };
