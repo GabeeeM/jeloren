@@ -31,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - NPC animations in plugins, multiple types of plugins
 - New model for admin vroom glider.
 - Transform death effect used by the Vampire castle boss
+- Balanced Terracotta, Dwarven mines, Haniwa and Vampire castle dungeons and other balance changes
 
 ### Changed
 
@@ -74,6 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ability to send trade requests to every entity.
 - Naming of entries in controls settings.
 - Percentage values in descriptions of potion sickness and agility potion.
+- Potentially fixed graphical issues with the vulkan backend on AMD windows platforms.
 
 ## [0.16.0] - 2024-03-30
 

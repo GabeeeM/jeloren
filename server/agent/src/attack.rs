@@ -316,12 +316,15 @@ impl<'a> AgentData<'a> {
                     [ActionStateFCounters::FCounterHealthThreshold as usize] -= SUMMON_THRESHOLD;
             }
         }
-        // teleport to target when it's further away, above or far beneath
-        else if (line_of_sight_with_target()
-            && (tgt_data.pos.0 - self.pos.0).magnitude_squared() > (25.0_f32).powi(2))
-            || ((tgt_data.pos.0 - self.pos.0).xy().magnitude_squared() < (3.0_f32).powi(2)
-                && (tgt_data.pos.0.z > self.pos.0.z + 3.0))
-            || (self.pos.0.z > tgt_data.pos.0.z + 20.0)
+        // teleport to target when it can't be pathed to
+        else if !self.path_toward_target(
+            agent,
+            controller,
+            tgt_data.pos.0,
+            read_data,
+            Path::Separate,
+            None,
+        ) || !(-3.0..3.0).contains(&(tgt_data.pos.0.z - self.pos.0.z))
         {
             controller.push_action(ControlAction::StartInput {
                 input: InputKind::Ability(0),
@@ -339,7 +342,10 @@ impl<'a> AgentData<'a> {
             if agent.combat_state.timers[DASH_TIMER] > 2.0 {
                 agent.combat_state.timers[DASH_TIMER] = 0.0;
             }
-            controller.push_basic_input(InputKind::Primary);
+            match rng.gen_range(0..2) {
+                0 => controller.push_basic_input(InputKind::Primary),
+                _ => controller.push_basic_input(InputKind::Ability(3)),
+            };
         } else if attack_data.dist_sqrd < MAX_PATH_DIST.powi(2)
             && self.path_toward_target(
                 agent,
@@ -5850,7 +5856,7 @@ impl<'a> AgentData<'a> {
         }
         if tgt_data.pos.0.z - self.pos.0.z > 5.0 {
             controller.push_action(ControlAction::StartInput {
-                input: InputKind::Ability(5),
+                input: InputKind::Ability(4),
                 target_entity: agent
                     .target
                     .as_ref()
@@ -5868,7 +5874,7 @@ impl<'a> AgentData<'a> {
         {
             agent.combat_state.timers[ActionStateTimers::TimerSummon as usize] = 0.0;
             agent.combat_state.timers[ActionStateTimers::SelectSummon as usize] =
-                rng.gen_range(0..=4) as f32;
+                rng.gen_range(0..=3) as f32;
         } else {
             agent.combat_state.timers[ActionStateTimers::TimerSummon as usize] += read_data.dt.0;
         }
@@ -5878,11 +5884,10 @@ impl<'a> AgentData<'a> {
                 0 => controller.push_basic_input(InputKind::Ability(0)),
                 1 => controller.push_basic_input(InputKind::Ability(1)),
                 2 => controller.push_basic_input(InputKind::Ability(2)),
-                3 => controller.push_basic_input(InputKind::Ability(3)),
-                _ => controller.push_basic_input(InputKind::Ability(4)),
+                _ => controller.push_basic_input(InputKind::Ability(3)),
             }
         } else if agent.combat_state.timers[ActionStateTimers::TimerBeam as usize] < 6.0 {
-            controller.push_basic_input(InputKind::Ability(6));
+            controller.push_basic_input(InputKind::Ability(5));
         } else if agent.combat_state.timers[ActionStateTimers::TimerBeam as usize] < 9.0 {
             controller.push_basic_input(InputKind::Primary);
         } else {
