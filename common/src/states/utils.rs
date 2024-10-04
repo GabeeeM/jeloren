@@ -617,6 +617,14 @@ pub fn handle_orientation(
     efficiency: f32,
     dir_override: Option<Dir>,
 ) {
+    if (input_is_pressed(data, InputKind::Noclip)) {
+        // dbg!(update.pos.0);
+        // dbg!(update.character_activity.look_dir.unwrap());
+
+        update.pos.0.x += update.character_activity.look_dir.unwrap().x;
+        update.pos.0.y += update.character_activity.look_dir.unwrap().y;
+        update.pos.0.z += update.character_activity.look_dir.unwrap().z;
+    }
     /// first check for horizontal
     fn to_horizontal_fast(ori: &crate::comp::Ori) -> crate::comp::Ori {
         if ori.to_quat().into_vec4().xy().is_approx_zero() {
@@ -1399,7 +1407,7 @@ pub fn handle_input(
         InputKind::Jump => {
             handle_jump(data, output_events, update, 1.0);
         },
-        InputKind::Fly => {},
+        InputKind::Fly | InputKind::Noclip => {},
     }
 }
 

@@ -381,9 +381,9 @@ impl Block {
     #[inline]
     pub fn get_glow(&self) -> Option<u8> {
         let glow_level = match self.kind() {
-            BlockKind::Lava => 24,
+            BlockKind::Lava => 2,
             BlockKind::GlowingRock | BlockKind::GlowingWeakRock => 10,
-            BlockKind::GlowingMushroom => 20,
+            BlockKind::GlowingMushroom => 2,
             _ => match self.get_sprite()? {
                 SpriteKind::StreetLamp | SpriteKind::StreetLampTall => 24,
                 SpriteKind::Ember | SpriteKind::FireBlock => 20,
@@ -437,6 +437,8 @@ impl Block {
                 SpriteKind::SeaDecorBlock
                 | SpriteKind::HaniwaKeyDoor
                 | SpriteKind::VampireKeyDoor => 10,
+                SpriteKind::Silver | SpriteKind::Gold | SpriteKind::Frostwood => 30,
+                SpriteKind::Bloodstone | SpriteKind::Iron | SpriteKind::Coal => 5,
                 _ => return None,
             },
         };

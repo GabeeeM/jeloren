@@ -1304,6 +1304,15 @@ impl PlayState for SessionState {
                                     .walking_speed_behavior
                                     .update(state, &mut self.walking_speed, |_| {});
                             },
+                            GameInput::Noclip => {
+                                self.walking_speed = false;
+                                self.client.borrow_mut().handle_input(
+                                    InputKind::Noclip,
+                                    state,
+                                    None,
+                                    self.target_entity,
+                                );
+                            },
                             _ => {},
                         }
                     },
