@@ -261,7 +261,10 @@ impl<'a> From<&'a Body> for SkeletonAttr {
                 (Cultistwarlock, _) => (0.5, 11.0),
                 (Huskbrute, _) => (8.5, 4.0),
                 (Tursus, _) => (-4.5, -14.0),
-                (Gigasfrost, _) => (-1.5, 5.0),
+                (Gigasfrost, _) => {
+                    println!("FROST GIGAS IN AREA");
+                    (-1.5, 5.0)
+                },
                 (AdletElder, _) => (-8.0, 10.0),
                 (SeaBishop, _) => (0.0, 9.5),
                 (HaniwaGeneral, _) => (-1.5, 10.0),

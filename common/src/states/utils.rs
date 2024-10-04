@@ -617,13 +617,18 @@ pub fn handle_orientation(
     efficiency: f32,
     dir_override: Option<Dir>,
 ) {
-    if (input_is_pressed(data, InputKind::Noclip)) {
+    if input_is_pressed(data, InputKind::Noclip) {
         // dbg!(update.pos.0);
         // dbg!(update.character_activity.look_dir.unwrap());
-
-        update.pos.0.x += update.character_activity.look_dir.unwrap().x;
-        update.pos.0.y += update.character_activity.look_dir.unwrap().y;
-        update.pos.0.z += update.character_activity.look_dir.unwrap().z;
+        if input_is_pressed(data, InputKind::Secondary) {
+            update.pos.0.x += update.character_activity.look_dir.unwrap().x * data.dt.0 * 15.0;
+            update.pos.0.y += update.character_activity.look_dir.unwrap().y * data.dt.0 * 15.0;
+            update.pos.0.z += update.character_activity.look_dir.unwrap().z * data.dt.0 * 15.0;
+        } else {
+            update.pos.0.x += update.character_activity.look_dir.unwrap().x;
+            update.pos.0.y += update.character_activity.look_dir.unwrap().y;
+            update.pos.0.z += update.character_activity.look_dir.unwrap().z;
+        }
     }
     /// first check for horizontal
     fn to_horizontal_fast(ori: &crate::comp::Ori) -> crate::comp::Ori {
