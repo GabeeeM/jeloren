@@ -137,7 +137,7 @@ impl CharacterBehavior for Data {
             let ori = {
                 let slerp_s = {
                     let angle = self.ori.look_dir().angle_between(*data.inputs.look_dir);
-                    let rate = 0.4 * PI / angle;
+                    let rate = 1.2 * PI / angle;
                     (data.dt.0 * rate).min(1.0)
                 };
 
