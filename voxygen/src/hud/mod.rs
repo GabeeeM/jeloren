@@ -112,7 +112,10 @@ use common::{
     recipe::RecipeBookManifest,
     resources::{ProgramTime, Secs, Time},
     slowjob::SlowJobPool,
-    states::glide::{BOOST, CAP, TOO_FAST},
+    states::{
+        glide::{BOOST, CAP, TOO_FAST},
+        utils::FARTMODE,
+    },
     terrain::{SpriteKind, TerrainChunk, UnlockKind},
     trade::{ReducedInventory, TradeAction},
     uid::Uid,
@@ -4836,6 +4839,8 @@ impl Hud {
                     },
                     #[cfg(feature = "egui-ui")]
                     GameInput::ToggleEguiDebug if state => {
+                        let mut fart_mode = FARTMODE.lock().unwrap();
+                        *fart_mode = !*fart_mode;
                         global_state.settings.interface.toggle_egui_debug =
                             !global_state.settings.interface.toggle_egui_debug;
                         true

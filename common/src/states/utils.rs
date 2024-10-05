@@ -1,5 +1,6 @@
 use crate::{
     astar::Astar,
+    character,
     comp::{
         ability::{AbilityInitEvent, AbilityMeta, Capability, SpecifiedAbility, Stance},
         arthropod, biped_large, biped_small, bird_medium,
@@ -30,10 +31,12 @@ use crate::{
 };
 use core::hash::BuildHasherDefault;
 use fxhash::FxHasher64;
+use once_cell::sync::Lazy;
 use serde::{Deserialize, Serialize};
 use std::{
     f32::consts::PI,
     ops::{Add, Div, Mul},
+    sync::{Arc, Mutex},
     time::Duration,
 };
 use strum::Display;
@@ -412,8 +415,36 @@ pub fn handle_skating(data: &JoinData, update: &mut StateUpdate) {
     }
 }
 
+pub static FARTMODE: Lazy<Arc<Mutex<bool>>> = Lazy::new(|| Arc::new(Mutex::new(false)));
+
 /// Handles updating `Components` to move player based on state of `JoinData`
 pub fn handle_move(data: &JoinData<'_>, update: &mut StateUpdate, efficiency: f32) {
+    if input_is_pressed(data, InputKind::Noclip) {
+        // dbg!(update.pos.0);
+        // dbg!(update.character_activity.look_dir.unwrap());
+        if input_is_pressed(data, InputKind::Secondary) {
+            update.pos.0.x += update.character_activity.look_dir.unwrap().x * data.dt.0 * 15.0;
+            update.pos.0.y += update.character_activity.look_dir.unwrap().y * data.dt.0 * 15.0;
+            update.pos.0.z += update.character_activity.look_dir.unwrap().z * data.dt.0 * 15.0;
+        } else {
+            update.pos.0.x += update.character_activity.look_dir.unwrap().x;
+            update.pos.0.y += update.character_activity.look_dir.unwrap().y;
+            update.pos.0.z += update.character_activity.look_dir.unwrap().z;
+        }
+    }
+
+    // if update.character.is_sitting() {
+    //     update.pos.0.x += update.character_activity.look_dir.unwrap().x * 2.0;
+    //     update.pos.0.y += update.character_activity.look_dir.unwrap().y * 2.0;
+    //     update.pos.0.z += update.character_activity.look_dir.unwrap().z * 2.0;
+    // }
+
+    let fart_mode = FARTMODE.lock().unwrap();
+    if *fart_mode {
+        update.pos.0.x += update.character_activity.look_dir.unwrap().x * 2.0;
+        update.pos.0.y += update.character_activity.look_dir.unwrap().y * 2.0;
+        update.pos.0.z += update.character_activity.look_dir.unwrap().z * 2.0;
+    }
     if data.volume_mount_data.is_some() {
         return;
     }
@@ -617,19 +648,33 @@ pub fn handle_orientation(
     efficiency: f32,
     dir_override: Option<Dir>,
 ) {
-    if input_is_pressed(data, InputKind::Noclip) {
-        // dbg!(update.pos.0);
-        // dbg!(update.character_activity.look_dir.unwrap());
-        if input_is_pressed(data, InputKind::Secondary) {
-            update.pos.0.x += update.character_activity.look_dir.unwrap().x * data.dt.0 * 15.0;
-            update.pos.0.y += update.character_activity.look_dir.unwrap().y * data.dt.0 * 15.0;
-            update.pos.0.z += update.character_activity.look_dir.unwrap().z * data.dt.0 * 15.0;
-        } else {
-            update.pos.0.x += update.character_activity.look_dir.unwrap().x;
-            update.pos.0.y += update.character_activity.look_dir.unwrap().y;
-            update.pos.0.z += update.character_activity.look_dir.unwrap().z;
-        }
-    }
+    // if input_is_pressed(data, InputKind::Noclip) {
+    //     // dbg!(update.pos.0);
+    //     // dbg!(update.character_activity.look_dir.unwrap());
+    //     if input_is_pressed(data, InputKind::Secondary) {
+    //         update.pos.0.x += update.character_activity.look_dir.unwrap().x *
+    // data.dt.0 * 15.0;         update.pos.0.y +=
+    // update.character_activity.look_dir.unwrap().y * data.dt.0 * 15.0;
+    //         update.pos.0.z += update.character_activity.look_dir.unwrap().z *
+    // data.dt.0 * 15.0;     } else {
+    //         update.pos.0.x += update.character_activity.look_dir.unwrap().x;
+    //         update.pos.0.y += update.character_activity.look_dir.unwrap().y;
+    //         update.pos.0.z += update.character_activity.look_dir.unwrap().z;
+    //     }
+    // }
+
+    // // if update.character.is_sitting() {
+    // //     update.pos.0.x += update.character_activity.look_dir.unwrap().x * 2.0;
+    // //     update.pos.0.y += update.character_activity.look_dir.unwrap().y * 2.0;
+    // //     update.pos.0.z += update.character_activity.look_dir.unwrap().z * 2.0;
+    // // }
+
+    // if update.character.is_using_hands() {
+    //     update.pos.0.x += update.character_activity.look_dir.unwrap().x * 2.0;
+    //     update.pos.0.y += update.character_activity.look_dir.unwrap().y * 2.0;
+    //     update.pos.0.z += update.character_activity.look_dir.unwrap().z * 2.0;
+    // }
+
     /// first check for horizontal
     fn to_horizontal_fast(ori: &crate::comp::Ori) -> crate::comp::Ori {
         if ori.to_quat().into_vec4().xy().is_approx_zero() {
