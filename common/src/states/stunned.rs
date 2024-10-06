@@ -53,6 +53,7 @@ impl CharacterBehavior for Data {
                         timer: tick_attack_or_default(data, self.timer, None),
                         ..*self
                     });
+                    update.pos.0.z -= 1.0;
                 } else {
                     // Transitions to recovery section of stage
                     update.character = CharacterState::Stunned(Data {
