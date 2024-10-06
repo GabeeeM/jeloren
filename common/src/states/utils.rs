@@ -422,10 +422,10 @@ pub fn handle_move(data: &JoinData<'_>, update: &mut StateUpdate, efficiency: f3
     if input_is_pressed(data, InputKind::Noclip) {
         // dbg!(update.pos.0);
         // dbg!(update.character_activity.look_dir.unwrap());
-        if input_is_pressed(data, InputKind::Secondary) {
-            update.pos.0.x += update.character_activity.look_dir.unwrap().x * data.dt.0 * 15.0;
-            update.pos.0.y += update.character_activity.look_dir.unwrap().y * data.dt.0 * 15.0;
-            update.pos.0.z += update.character_activity.look_dir.unwrap().z * data.dt.0 * 15.0;
+        if input_is_pressed(data, InputKind::Primary) {
+            update.pos.0.x += update.character_activity.look_dir.unwrap().x * data.dt.0 * 7.5;
+            update.pos.0.y += update.character_activity.look_dir.unwrap().y * data.dt.0 * 7.5;
+            update.pos.0.z += update.character_activity.look_dir.unwrap().z * data.dt.0 * 7.5;
         } else {
             update.pos.0.x += update.character_activity.look_dir.unwrap().x;
             update.pos.0.y += update.character_activity.look_dir.unwrap().y;
