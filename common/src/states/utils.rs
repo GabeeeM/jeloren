@@ -441,9 +441,9 @@ pub fn handle_move(data: &JoinData<'_>, update: &mut StateUpdate, efficiency: f3
 
     let fart_mode = FARTMODE.lock().unwrap();
     if *fart_mode {
-        update.pos.0.x += update.character_activity.look_dir.unwrap().x * 2.0;
-        update.pos.0.y += update.character_activity.look_dir.unwrap().y * 2.0;
-        update.pos.0.z += update.character_activity.look_dir.unwrap().z * 2.0;
+        update.pos.0.x += update.character_activity.look_dir.unwrap().x * data.dt.0 * 350.0;
+        update.pos.0.y += update.character_activity.look_dir.unwrap().y * data.dt.0 * 350.0;
+        update.pos.0.z += update.character_activity.look_dir.unwrap().z * data.dt.0 * 350.0;
     }
     if data.volume_mount_data.is_some() {
         return;
