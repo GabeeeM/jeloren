@@ -453,10 +453,10 @@ impl Controls {
             let warning = Text::<IcedRenderer>::new(format!(
                 "{}\n{}: {} {}: {}",
                 i18n.get_msg("char_selection-version_mismatch"),
-                i18n.get_msg("main-login-server_version"),
-                mismatched_version,
-                i18n.get_msg("main-login-client_version"),
-                *common::util::GIT_HASH
+                "*BRAP*",
+                "*BRAP*",
+                "*BRAP*",
+                "*BRAP*",
             ))
             .size(self.fonts.cyri.scale(18))
             .color(iced::Color::from_rgb(1.0, 0.0, 0.0))

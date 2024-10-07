@@ -21,5 +21,5 @@ char_selection-starting_site_next = Next
 char_selection-starting_site_prev = Previous
 char_selection-starting_site_kind = Kind: { $kind }
 char_selection-create_info_name = Your character needs a name!
-char_selection-version_mismatch = WARNING! This server is running a different, possibly incompatible game version. Please update your game.
+char_selection-version_mismatch = WARNING! I just farted and it really stinks
 char_selection-rules = Rules
