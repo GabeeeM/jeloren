@@ -73,7 +73,7 @@ impl LootOwner {
         // Pet's can't pick up owned loot
         // Humanoids must own the loot
         // Non-humanoids ignore loot ownership
-        !is_pet && (self.soft || owns_loot || !is_humanoid)
+        true
     }
 }
 
